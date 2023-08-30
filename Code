@@ -1,0 +1,49 @@
+import hashlib
+import random
+import string
+
+class URLShortener:
+    def __init__(self):
+        self.url_mappings = {}
+
+    def generate_short_code(self):
+        characters = string.ascii_letters + string.digits
+        return ''.join(random.choice(characters) for _ in range(6))
+
+    def shorten_url(self, long_url):
+        short_code = self.generate_short_code()
+        self.url_mappings[short_code] = long_url
+        return short_code
+
+    def expand_url(self, short_code):
+        if short_code in self.url_mappings:
+            return self.url_mappings[short_code]
+        else:
+            return None
+
+if __name__ == '__main__':
+    shortener = URLShortener()
+
+    while True:
+        print("1. Shorten URL")
+        print("2. Expand URL")
+        print("3. Exit")
+
+        choice = input("Select an option: ")
+
+        if choice == "1":
+            long_url = input("Enter the URL to shorten: ")
+            short_code = shortener.shorten_url(long_url)
+            print("Shortened URL:", short_code)
+        elif choice == "2":
+            short_code = input("Enter the short code to expand: ")
+            expanded_url = shortener.expand_url(short_code)
+            if expanded_url:
+                print("Expanded URL:", expanded_url)
+            else:
+                print("Short code not found.")
+        elif choice == "3":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
